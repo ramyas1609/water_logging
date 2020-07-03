@@ -10,6 +10,7 @@ class TrackWaterViewController: UIViewController {
 
     private let addWaterButton = PushButton()
     private let updateGoalButton = UIButton()
+    private let progressLabel = UILabel()
     private let maxNumberOfGlasses: Int = 10
 
     var counter: Int = 0 {
@@ -44,23 +45,39 @@ class TrackWaterViewController: UIViewController {
         
         // Set up add water button
         addWaterButton.addTarget(self, action: #selector(addWaterButtonPressed), for: .touchUpInside)
+        
+        progressLabel.text = "Today's progress    \(counter)/\(maxNumberOfGlasses)"
+        progressLabel.textColor = UIColor.black
+        progressLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        progressLabel.adjustsFontSizeToFitWidth = true
 
         setUpConstraints()
     }
 
     private func setUpConstraints() {
         let container = UIView()
+        progressLabel.translatesAutoresizingMaskIntoConstraints = false
         addWaterButton.translatesAutoresizingMaskIntoConstraints = false
         updateGoalButton.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(progressLabel)
         container.addSubview(addWaterButton)
         container.addSubview(updateGoalButton)
         container.translatesAutoresizingMaskIntoConstraints = false
-        
+
         view.addSubview(container)
         
+        let progressLabelConstraints = [
+            progressLabel.topAnchor.constraint(equalTo: container.topAnchor),
+            progressLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            progressLabel.trailingAnchor.constraint(equalTo:container.trailingAnchor),
+            progressLabel.widthAnchor.constraint(equalToConstant: 150),
+        ]
+
+        NSLayoutConstraint.activate(progressLabelConstraints)
+
         // Buttons constraints
         let addWaterButtonConstraints = [
-            addWaterButton.topAnchor.constraint(equalTo: container.topAnchor),
+            addWaterButton.topAnchor.constraint(equalTo: progressLabel.bottomAnchor, constant: 60),
             addWaterButton.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             addWaterButton.trailingAnchor.constraint(equalTo:container.trailingAnchor),
             addWaterButton.widthAnchor.constraint(equalToConstant: 120),
@@ -85,7 +102,8 @@ class TrackWaterViewController: UIViewController {
                                     container.topAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor),
                                     container.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
                                     container.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor),
-                                    container.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor)]
+                                    container.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor),
+                                    container.widthAnchor.constraint(equalToConstant: 150)]
         
         NSLayoutConstraint.activate(containerConstraints)
         
@@ -95,7 +113,7 @@ class TrackWaterViewController: UIViewController {
 
     @objc private func addWaterButtonPressed() {
         counter = counter + 1
-        print("Counter ", counter)
+        progressLabel.text = "Today's progress    \(counter)/\(maxNumberOfGlasses)"
     }
 
     @objc private func goalButtonPressed() {

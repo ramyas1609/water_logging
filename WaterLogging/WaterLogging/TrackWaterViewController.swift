@@ -13,13 +13,8 @@ class TrackWaterViewController: UIViewController {
     private let progressLabel = UILabel()
     private let maxNumberOfGlasses: Int = 10
 
-    var counter: Int = 0 {
-      didSet {
-        if counter <= maxNumberOfGlasses {
-          //the view needs to be refreshed
-        }
-      }
-    }
+    var count: Int = 0
+    // Read from user defualts if available
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -45,13 +40,20 @@ class TrackWaterViewController: UIViewController {
         
         // Set up add water button
         addWaterButton.addTarget(self, action: #selector(addWaterButtonPressed), for: .touchUpInside)
-        
-        progressLabel.text = "Today's progress    \(counter)/\(maxNumberOfGlasses)"
+
+        // Set up the progress label
         progressLabel.textColor = UIColor.black
         progressLabel.font = UIFont.boldSystemFont(ofSize: 15)
         progressLabel.adjustsFontSizeToFitWidth = true
+        
+        count = UserDefaults.standard.integer(forKey: "count")
+        setLabelText()
 
         setUpConstraints()
+    }
+
+    private func setLabelText() {
+         progressLabel.text = "Today's progress    \(count)/\(maxNumberOfGlasses)"
     }
 
     private func setUpConstraints() {
@@ -111,13 +113,13 @@ class TrackWaterViewController: UIViewController {
     // Actions
 
     @objc private func addWaterButtonPressed() {
-        counter = counter + 1
-        progressLabel.text = "Today's progress    \(counter)/\(maxNumberOfGlasses)"
+        count = count + 1
+        setLabelText()
+        UserDefaults.standard.set(count, forKey: "count")
     }
 
     @objc private func goalButtonPressed() {
         print("Goal button pressed")
     }
-
 }
 

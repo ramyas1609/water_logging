@@ -68,9 +68,8 @@ class TrackWaterViewController: UIViewController {
         
         let progressLabelConstraints = [
             progressLabel.topAnchor.constraint(equalTo: container.topAnchor),
-            progressLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            progressLabel.trailingAnchor.constraint(equalTo:container.trailingAnchor),
-            progressLabel.widthAnchor.constraint(equalToConstant: 150),
+            progressLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: -40),
+            progressLabel.trailingAnchor.constraint(equalTo:container.trailingAnchor, constant: 40),
         ]
 
         NSLayoutConstraint.activate(progressLabelConstraints)
@@ -80,16 +79,16 @@ class TrackWaterViewController: UIViewController {
             addWaterButton.topAnchor.constraint(equalTo: progressLabel.bottomAnchor, constant: 60),
             addWaterButton.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             addWaterButton.trailingAnchor.constraint(equalTo:container.trailingAnchor),
-            addWaterButton.widthAnchor.constraint(equalToConstant: 120),
-            addWaterButton.heightAnchor.constraint(equalToConstant: 120)
+            addWaterButton.widthAnchor.constraint(equalToConstant: 80),
+            addWaterButton.heightAnchor.constraint(equalToConstant: 80)
         ]
         
         NSLayoutConstraint.activate(addWaterButtonConstraints)
         
         let updateGoalButtonConstraints = [
             updateGoalButton.topAnchor.constraint(equalTo: addWaterButton.bottomAnchor, constant: 60),
-            updateGoalButton.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            updateGoalButton.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            updateGoalButton.leadingAnchor.constraint(equalTo: addWaterButton.leadingAnchor, constant: -20),
+            updateGoalButton.trailingAnchor.constraint(equalTo: addWaterButton.trailingAnchor, constant: 20),
             updateGoalButton.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ]
         
@@ -103,7 +102,7 @@ class TrackWaterViewController: UIViewController {
                                     container.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
                                     container.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor),
                                     container.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor),
-                                    container.widthAnchor.constraint(equalToConstant: 150)]
+                                    ]
         
         NSLayoutConstraint.activate(containerConstraints)
         

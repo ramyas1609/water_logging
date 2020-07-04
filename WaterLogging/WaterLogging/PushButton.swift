@@ -18,7 +18,7 @@ class PushButton: UIButton {
     }
     */
 
-    var fillColor : UIColor = .green
+    var fillColor : UIColor = .systemTeal
     private struct Constants {
         static let plusLineWidth: CGFloat = 3.0
         static let plusButtonScale: CGFloat = 0.6

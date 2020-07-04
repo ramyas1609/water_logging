@@ -28,8 +28,7 @@ class VisualizeWaterIntakeViewController: UIViewController {
     // Set Up
 
     private func setUp() {
-        trackingLabel.text = "X oz of X oz goal consumed today"
-        trackingLabel.textColor = .label
+        trackingLabel.text = "Water glasses Vs day of the week"
         view.backgroundColor = .systemBackground
         
         setUpConstraints()

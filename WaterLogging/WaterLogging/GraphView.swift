@@ -17,11 +17,19 @@ class GraphView: UIView {
         // Drawing code
     }
     */
-    var startColor: UIColor = .red
-    var endColor: UIColor = .green
+    var startColor: UIColor = .blue
+    var endColor: UIColor = .systemTeal
+    //Weekly sample data
+    var graphPoints = [4, 2, 6, 4, 5, 8, 3]
 
       override func draw(_ rect: CGRect) {
         
+        drawGradient(rect: rect)
+        drawGraphLine(rect: rect)
+      
+      }
+
+    func drawGradient(rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()!
         let colors = [startColor.cgColor, endColor.cgColor]
         
@@ -39,6 +47,49 @@ class GraphView: UIView {
                             start: startPoint,
                               end: endPoint,
                           options: [])
-      }
+    }
+
+    func drawGraphLine(rect: CGRect) {
+        let width = rect.width
+        let height = rect.height
+        let graphWidth = width - 20 * 2 // leaving a margin of 20 points on left and right
+        let columnXPoint = { (column: Int) -> CGFloat in
+          //Calculate the gap between points
+          let spacing = graphWidth / CGFloat(self.graphPoints.count - 1)
+          return CGFloat(column) * spacing + 20
+        }
+        
+        let graphHeight = height - 40 * 2 // leaving a margin of 40 points on top and bottom
+        let maxValue = graphPoints.max()!
+        let columnYPoint = { (graphPoint: Int) -> CGFloat in
+          let y = CGFloat(graphPoint) / CGFloat(maxValue) * graphHeight
+          return graphHeight + 40 - y // Flip the graph
+        }
+        
+        UIColor.white.setFill()
+        UIColor.white.setStroke()
+            
+        let graphPath = UIBezierPath()
+        // move to starting point
+        let startingPoint = CGPoint(x: columnXPoint(0), y: columnYPoint(graphPoints[0]))
+        graphPath.move(to: startingPoint )
+        
+        // draw a circle on the starting point
+        drawSmallCircle(point: startingPoint)
+
+
+        // draw line to next point and draw a circle there
+        for i in 1...(graphPoints.count-1) {
+            let next = CGPoint(x: columnXPoint(i), y: columnYPoint(graphPoints[i]))
+            graphPath.addLine(to: next)
+            drawSmallCircle(point: next)
+        }
+        graphPath.stroke()
+    }
+    
+    func drawSmallCircle(point: CGPoint) {
+        let circle = UIBezierPath(ovalIn: CGRect(origin: CGPoint(x: point.x - 3, y: point.y - 3), size: CGSize(width: 5, height: 5)))
+        circle.fill()
+    }
 
 }

@@ -7,6 +7,9 @@
 import UIKit
 
 class AppTabBarController: UITabBarController {
+    
+    let trackWaterViewController = TrackWaterViewController()
+    let visualizeWaterIntakeViewController = VisualizeWaterIntakeViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,10 +17,8 @@ class AppTabBarController: UITabBarController {
         let addImage = UIImage(systemName: "plus.circle")
         let vizImage = UIImage(systemName: "chart.bar")
         
-        let trackWaterViewController = TrackWaterViewController()
+        
         trackWaterViewController.tabBarItem = UITabBarItem(title: "Track", image: addImage, tag: 0)
-
-        let visualizeWaterIntakeViewController = VisualizeWaterIntakeViewController()
         visualizeWaterIntakeViewController.tabBarItem = UITabBarItem(title: "Visualize", image: vizImage, tag: 1)
 
         let tabBarList = [trackWaterViewController, visualizeWaterIntakeViewController]

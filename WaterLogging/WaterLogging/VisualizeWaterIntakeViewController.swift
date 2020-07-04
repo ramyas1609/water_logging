@@ -8,8 +8,12 @@ import UIKit
 
 class VisualizeWaterIntakeViewController: UIViewController {
 
+    // Specifically made public so that the AppTabBarController can set
+    // the last graph point in the graph view to today's number of water glasses.
+    public let graphView = GraphView()
     private let trackingLabel = UILabel()
-    private let graphView = GraphView()
+    
+    static let notificationName = Notification.Name("updateToday")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -23,6 +27,14 @@ class VisualizeWaterIntakeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(onNotification(notification:)), name: VisualizeWaterIntakeViewController.notificationName, object: nil)
+    }
+    
+    @objc func onNotification(notification: Notification) {
+        if let count = notification.userInfo?["data"] as? Int {
+            graphView.graphPoints[graphView.graphPoints.count - 1] = count
+            graphView.setNeedsDisplay()
+        }
     }
     
     // Set Up
@@ -57,8 +69,8 @@ class VisualizeWaterIntakeViewController: UIViewController {
                                     graphView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
                                     graphView.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor),
                                     graphView.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor),
-                                    graphView.widthAnchor.constraint(equalToConstant: 200),
-                                    graphView.heightAnchor.constraint(equalToConstant: 200)]
+                                    graphView.widthAnchor.constraint(equalToConstant: 250),
+                                    graphView.heightAnchor.constraint(equalToConstant: 250)]
         
         NSLayoutConstraint.activate(graphViewConstraints)
     }

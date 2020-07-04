@@ -116,6 +116,7 @@ class TrackWaterViewController: UIViewController {
         count = count + 1
         setLabelText()
         UserDefaults.standard.set(count, forKey: "count")
+        NotificationCenter.default.post(name: VisualizeWaterIntakeViewController.notificationName, object: nil, userInfo:["data": count])
     }
 
     @objc private func goalButtonPressed() {

@@ -17,16 +17,19 @@ class GraphView: UIView {
         // Drawing code
     }
     */
-    var startColor: UIColor = .blue
-    var endColor: UIColor = .systemTeal
-    //Weekly sample data
-    var graphPoints = [4, 2, 6, 4, 5, 8, 3]
+    
+    //Sample data
+    public var graphPoints = [4, 2, 6, 4, 5, 8, 3]
 
-      override func draw(_ rect: CGRect) {
+    let startColor: UIColor = .blue
+    let endColor: UIColor = .systemTeal
+    let stackView = UIStackView()
+
+    override func draw(_ rect: CGRect) {
         
         drawGradient(rect: rect)
         drawGraphLine(rect: rect)
-      
+
       }
 
     func drawGradient(rect: CGRect) {

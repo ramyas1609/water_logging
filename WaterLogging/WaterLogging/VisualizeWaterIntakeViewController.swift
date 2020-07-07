@@ -12,6 +12,14 @@ class VisualizeWaterIntakeViewController: UIViewController {
     // the last graph point in the graph view to today's number of water glasses.
     public let graphView = GraphView()
     private let trackingLabel = UILabel()
+    private var labels: [UILabel] = []
+    private let label1 = UILabel()
+    private let label2 = UILabel()
+    private let label3 = UILabel()
+    private let label4 = UILabel()
+    private let label5 = UILabel()
+    private let label6 = UILabel()
+    private let label7 = UILabel()
     
     static let notificationName = Notification.Name("updateToday")
     
@@ -43,6 +51,13 @@ class VisualizeWaterIntakeViewController: UIViewController {
         trackingLabel.text = "Water glasses Vs day of the week"
         view.backgroundColor = .systemBackground
         
+        labels = [label1, label2, label3, label4, label5, label6, label7]
+        let labelTexts: [String] = ["SU", "M", "T", "W", "TH", "F", "SA"]
+        for (index, label) in labels.enumerated() {
+            label.text = labelTexts[index]
+            label.font = UIFont.boldSystemFont(ofSize: 12.0)
+            label.textColor = .black
+        }
         setUpConstraints()
     }
     
@@ -52,8 +67,13 @@ class VisualizeWaterIntakeViewController: UIViewController {
         
         graphView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(graphView)
-        // Label constraints
         
+        for label in labels{
+            label.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(label)
+        }
+            
+        // Label constraints
         let trackingLabelConstraints = [trackingLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
                                     trackingLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -200),
                                     trackingLabel.topAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor),
@@ -73,6 +93,23 @@ class VisualizeWaterIntakeViewController: UIViewController {
                                     graphView.heightAnchor.constraint(equalToConstant: 250)]
         
         NSLayoutConstraint.activate(graphViewConstraints)
+        
+        var offset: CGFloat = 0
+        for (index, label) in labels.enumerated() {
+            if index < 4 {
+                offset = CGFloat((3 - index) * -40)
+            }
+            else {
+                offset = CGFloat((index - 3) * 40)
+            }
+            let labelConstraints = [label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: offset),
+            label.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 100),
+            label.topAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor),
+            label.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.leadingAnchor),
+            label.trailingAnchor.constraint(lessThanOrEqualTo: self.view.trailingAnchor),
+            label.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor)]
+            NSLayoutConstraint.activate(labelConstraints)
+        }
     }
 }
 

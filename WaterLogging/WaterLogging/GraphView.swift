@@ -23,7 +23,6 @@ class GraphView: UIView {
 
     let startColor: UIColor = .blue
     let endColor: UIColor = .systemTeal
-    let stackView = UIStackView()
 
     override func draw(_ rect: CGRect) {
         
@@ -66,7 +65,7 @@ class GraphView: UIView {
         let maxValue = graphPoints.max()!
         let columnYPoint = { (graphPoint: Int) -> CGFloat in
           let y = CGFloat(graphPoint) / CGFloat(maxValue) * graphHeight
-          return graphHeight + 40 - y // Flip the graph
+          return graphHeight + 40 - y
         }
         
         UIColor.white.setFill()

@@ -19,6 +19,8 @@ class PushButton: UIButton {
     */
 
     var fillColor : UIColor = .systemTeal
+    var isAdd: Bool = true
+
     private struct Constants {
         static let plusLineWidth: CGFloat = 3.0
         static let plusButtonScale: CGFloat = 0.6
@@ -59,9 +61,11 @@ class PushButton: UIButton {
       x: halfWidth + halfPlusWidth,
       y: halfHeight))
 
-    plusPath.move(to: CGPoint(x:halfWidth , y: halfHeight + halfPlusWidth))
+    if isAdd {
+            plusPath.move(to: CGPoint(x:halfWidth , y: halfHeight + halfPlusWidth))
 
-    plusPath.addLine(to: CGPoint(x:halfWidth, y:halfHeight - halfPlusWidth))
+            plusPath.addLine(to: CGPoint(x:halfWidth, y:halfHeight - halfPlusWidth))
+    }
 
     //set the stroke color
     UIColor.white.setStroke()
